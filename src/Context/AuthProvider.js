@@ -23,7 +23,7 @@ function AuthProvider({ children }) {
                 navigate('/')
             }
 
-            navigate('/login')
+            navigate('/')
         })
 
         // clean function 
@@ -33,11 +33,9 @@ function AuthProvider({ children }) {
     }, [navigate])
     
     return (
-        <div>
             <AuthContext.Provider value={{ user }}>
                 {isLoading ? <Spin /> : children}
             </AuthContext.Provider>
-        </div>
     );
 }
 
