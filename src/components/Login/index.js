@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col, Button, Typography } from 'antd'
-import firebase, { auth } from "../../firebase/config";
+import firebase, { auth } from '../firebase/config';
 
 const { Title } = Typography
 
@@ -10,8 +10,6 @@ function Login() {
     const handleFbLogin = () => {
         auth.signInWithPopup(fbProvider)
     }
-
-    // auth.onAuthStateChanged((user => ))
 
     return (
         <div>
