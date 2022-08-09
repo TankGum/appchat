@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext, useMemo } from "react";
 import{ Button, Collapse, Typography } from 'antd'
 import styled from "styled-components";
 import { PlusSquareOutlined } from "@ant-design/icons";
+import { AppContext } from "../../Context/AppProvider";
 
 const { Panel } = Collapse
 
@@ -29,12 +30,19 @@ const LinkStyled = styled(Typography.Link)`
 `
 
 function RoomList() {
+
+    const { rooms } = useContext(AppContext)
+
     return (
         <Collapse ghost defaultActiveKey={['1']}>
             <PanelStyled header='Danh sách các phòng' key='1'>
-                <LinkStyled>Room 1</LinkStyled>
-                <LinkStyled>Room 2</LinkStyled>
-                <LinkStyled>Room 3</LinkStyled>
+                {
+                    rooms.map(room => 
+                    <LinkStyled 
+                        key={room.id}>
+                        {room.name}
+                    </LinkStyled>)
+                }
                 <Button type="text" icon={<PlusSquareOutlined />} className="add-room">Thêm phòng</Button>
             </PanelStyled>
         </Collapse>

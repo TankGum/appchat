@@ -1,8 +1,10 @@
-import { cond } from "lodash"
-import React, { useEffect } from "react"
+
+import { useEffect, useState } from "react"
 import { db } from "../firebase/config"
 
 const useFirestore = (collection, condition) => {
+    const [documents, setDocuments] = useState([])
+
      useEffect(() => {
         let collectionRef = db.collection(collection).orderBy('createdAt')
 
@@ -10,22 +12,22 @@ const useFirestore = (collection, condition) => {
             if (!condition.compareValue || !condition.compareValue.length) {
                 return
             }
-            collectionRef.where(condition.fieldName, condition.operator, condition.compareValue)
+            collectionRef = collectionRef.where(condition.fieldName, condition.operator, condition.compareValue)
         }
 
-        collectionRef
-
-
-        
-        .onSnapshot((snapshot) => {
-            const data = snapshot.docs.map(doc => ({
+        const unsubscribe = collectionRef.onSnapshot((snapshot) => {
+            const documents = snapshot.docs.map(doc => ({
                 ...doc.data(),
                 id: doc.id,
             }))
 
-            console.log({ data, snapshot, docs: snapshot.docs })
+            setDocuments(documents)
         })
-    }, [])
+
+        return unsubscribe
+    }, [collection, condition])
+
+    return documents
 }
 
 export default useFirestore

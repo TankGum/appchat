@@ -12,7 +12,7 @@ function AuthProvider({ children }) {
 
 
     useEffect(() => {
-        const unsubscibed = auth.onAuthStateChanged((user) => {
+        const unsubscribed = auth.onAuthStateChanged((user) => {
             console.log({ user })
             if (user) {
                 const { displayName, email, uid, photoURL } = user
@@ -30,7 +30,7 @@ function AuthProvider({ children }) {
 
         // clean function 
         return () => {
-            unsubscibed()
+            unsubscribed()
         }
     }, [navigate])
     
