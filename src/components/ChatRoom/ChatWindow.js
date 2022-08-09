@@ -106,7 +106,6 @@ function ChatWindow() {
                                 <Form.Item>
                                     <Input 
                                         placeholder="Nhập tin nhắn"
-                                        bordered={false}
                                         autoComplete='off'
                                     />
                                 </Form.Item>

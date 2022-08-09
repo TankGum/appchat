@@ -21,9 +21,11 @@ function AuthProvider({ children }) {
                 })
                 setIsLoading(false)
                 navigate('/')
+                return
             }
 
-            navigate('/')
+            setIsLoading(false)
+            navigate('/login')
         })
 
         // clean function 
