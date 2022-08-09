@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Button, Avatar, Typography } from 'antd'
 import styled from "styled-components";
+import { AuthContext } from "../../Context/AuthProvider";
 
 import { auth, db } from "../../firebase/config";
 
@@ -18,16 +19,10 @@ const WrapperStyled = styled.div`
 
 function UserInfo() {
 
-    useEffect(() => {
-        db.collection('user').onSnapshot((snapshot) => {
-            const data = snapshot.docs.map(doc => ({
-                ...doc.data(),
-                id: doc.id,
-            }))
-
-            console.log({ data, snapshot, docs: snapshot.docs })
-        })
-    }, [])
+    const { user: {
+        displayName,
+        photoURL
+    } } = useContext(AuthContext)
 
     const handleFbLogout = () => {
         auth.signOut()
@@ -35,11 +30,13 @@ function UserInfo() {
 
     return (
         <WrapperStyled>
-                <div>
-                    <Avatar>Avatar</Avatar>
-                    <Typography.Text className="user-name">Tank</Typography.Text>
-                </div>
-                <Button ghost onClick={handleFbLogout}>Đăng xuất</Button>
+            <div>
+                <Avatar src={photoURL}>
+                    {photoURL ? '' : displayName?.charAt(0)?.toUpperCase()}
+                </Avatar>
+                <Typography.Text className="user-name">{displayName}</Typography.Text>
+            </div>
+            <Button ghost onClick={handleFbLogout}>Đăng xuất</Button>
         </WrapperStyled>
     );
 }

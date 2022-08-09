@@ -10,7 +10,7 @@
     "antd": "^4.22.3",
     "date-fns": "^2.29.1",
     "firebase": "^9.9.2",
-    "firebase-tools": "^11.5.0",
+    "firebase-tools": "^9.23.3",
     "har-validator": "^5.1.5",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
