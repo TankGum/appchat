@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "appchat-5d2d2"
-  }
+    "default": "appchat-5d2d2",
+    "*": "appchat-5d2d2"
+  },
+  "targets": {},
+  "etags": {}
 }

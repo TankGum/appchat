@@ -1,33 +1,50 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { Form, Modal, Input } from 'antd'
+import { AppContext } from "../../Context/AppProvider"
+import { useForm } from "rc-field-form"
+import { addDocument } from "../../firebase/services"
+import { AuthContext } from "../../Context/AuthProvider"
 
 function AddRoomModal() {
 
+    const { isAddRoomVisible, setIsAddRoomVisible } = useContext(AppContext)
+    const { user: { uid } } = useContext(AuthContext)
+
+    const [form] = Form.useForm()
+
     const handleOk = () => {
 
+        console.log({ FormData: form.getFieldValue() })
+        addDocument('rooms', { ...form.getFieldsValue(), members: [uid] });
+
+        form.resetFields()
+
+        setIsAddRoomVisible(false)
     }
 
     const handleCancel = () => {
-
+        setIsAddRoomVisible(false)
+        form.resetFields()
     }
 
     return (
         <div>
-            <Modal 
-                title='Tao phong'
-                visible={false}
-                onOk={handleOk}
-                onCancel={handleCancel}
-            />
-            <Form>
-                <Form.Item label='Mo ta' name='name' >
-                    <Input placeholder="nhap ten" />
-                </Form.Item>
-                <Form.Item label='Mo ta' name='desc'>
-                    <Input placeholder="nhap ten" />
-                </Form.Item>
-            </Form>
-        </div>
+      <Modal
+        title='Tạo phòng'
+        visible={isAddRoomVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <Form form={form} layout='vertical'>
+          <Form.Item label='Tên phòng' name='name'>
+            <Input placeholder='Nhập tên phòng' />
+          </Form.Item>
+          <Form.Item label='Mô tả' name='description'>
+            <Input.TextArea placeholder='Nhập mô tả' />
+          </Form.Item>
+        </Form>
+      </Modal>
+    </div>
     );
 }
 

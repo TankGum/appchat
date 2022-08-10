@@ -68,6 +68,7 @@ const MessageListStyled = styled.div`
 `
 
 function ChatWindow() {
+    
     return (
         <WrapperStyled>
                 <HeaderStyled>
